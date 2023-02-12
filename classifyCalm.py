@@ -23,7 +23,7 @@ if __name__ == "__main__":
     """ 1. CONNECT TO EEG STREAM """
 
     # Search for active LSL stream
-    print('Looking for an EEG stream...')
+    print('Looking for the EEG stream...')
     streams = resolve_byprop('type', 'EEG', timeout=2)
     if len(streams) == 0:
         raise RuntimeError('Can\'t find EEG stream.')
