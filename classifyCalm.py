@@ -14,7 +14,10 @@ and can then classify similar unseen information.
 import numpy as np  # Module that simplifies computations on matrices
 import matplotlib.pyplot as plt  # Module used for plotting
 from pylsl import StreamInlet, resolve_byprop  # Module to receive EEG data
-
+import asyncio
+import websockets
+import sys
+sys.path.append('bci-workshop-master/python/')
 import bci_workshop_tools as BCIw  # Our own functions for the workshop
 
 
@@ -73,7 +76,7 @@ if __name__ == "__main__":
     feature_names = BCIw.get_feature_names(ch_names)
 
     # Number of seconds to collect training data for (one class)
-    training_length = 20
+    training_length = 10
 
     """ 3. RECORD TRAINING DATA """
 
@@ -147,10 +150,15 @@ if __name__ == "__main__":
 
             decision_buffer, _ = BCIw.update_buffer(decision_buffer,
                                                     np.reshape(y_hat, (-1, 1)))
+        #     """ 3.3 SEND THE DECISIONS """
+        #     f = open('decision_file.txt','w')
+        #     f.write(y_hat)
+        #     f.close()
 
-            """ 3.3 VISUALIZE THE DECISIONS """
+            """ 3.4 VISUALIZE THE DECISIONS """
             plotter_decision.update_plot(decision_buffer)
             plt.pause(0.00001)
+
 
     except KeyboardInterrupt:
 
